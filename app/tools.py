@@ -9,6 +9,7 @@ class AnalyzerInput(BaseModel):
 
 @tool("transaction_pattern_analyzer", args_schema=AnalyzerInput)
 def transaction_pattern_analyzer(account_id: str, days: int = 30) -> str:
+    """Analyzes transaction history for potential fraud patterns."""
     deterministic_seed = sum(ord(char) for char in account_id)
     random.seed(deterministic_seed)
     
@@ -34,6 +35,7 @@ class ScreenerInput(BaseModel):
 
 @tool("sanctions_pep_screener", args_schema=ScreenerInput)
 def sanctions_pep_screener(name: str) -> str:
+    """Screens individuals against global sanctions and PEP (Politically Exposed Persons) lists."""
     normalized_name = name.strip().title()
     
     deterministic_seed = sum(ord(char) for char in name.lower())
@@ -56,7 +58,7 @@ class SarInput(BaseModel):
 
 @tool("sar_draft_generator", args_schema=SarInput)
 def sar_draft_generator(account_id: str, findings: str) -> str:
-    
+    """Generates a draft for a Suspicious Activity Report (SAR) based on case files."""
     return (
         f"--- CONFIDENTIAL REGULATORY SAR NARRATIVE DRAFT ---\n"
         f"SUBJECT ACCOUNT IDENTIFIER: {account_id}\n"
